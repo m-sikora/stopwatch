@@ -3,6 +3,11 @@ const _ = require('lodash');
 const convertHrtime = require('convert-hrtime');
 const math = require('mathjs');
 
+const isPromise = (obj = {}) => {
+  const { then } = obj;
+  return _.isFunction(then);
+};
+
 function Scope() {
   this.buckets = {};
   this.checkpoints = {};
@@ -30,9 +35,15 @@ function Scope() {
     this.buckets[bucketName] = bucket;
   };
   this.wrapFunction = function (bucketName, callback) {
-    return async () => {
+    return (...args) => {
       this.registerCheckpoint(bucketName);
-      const r = await callback();
+      const r = callback(...args);
+      if (isPromise(r)) {
+        return r.then(rr => {
+          this.saveDelta(bucketName, bucketName);
+          return rr;
+        });
+      }
       this.saveDelta(bucketName, bucketName);
       return r
     }
