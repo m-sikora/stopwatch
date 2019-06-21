@@ -1,0 +1,20 @@
+{
+  "name": "stopwatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-things": "^0.2.0",
+    "convert-hrtime": "^3.0.0",
+    "lodash": "^4.17.11",
+    "mathjs": "^6.0.2",
+    "mocha": "^6.1.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
